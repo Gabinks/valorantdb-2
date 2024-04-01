@@ -22,29 +22,30 @@ export default function Register(){
 
         const newErrors = {};
 
-        if (!username.trim()) {
+        if (username.indexOf(' ') >= 0) {
             newErrors.username = "Username contains space";
         }
-        if ((username.trim().length < 3)) {
-            console.log(username.trim().length > 3)
+        if (username.length < 3) {
             newErrors.username = "Username is less than 3 letters";
         }
         //TODO: Username is unique
-        if(password.trim()){
+        if(password.indexOf(' ') >= 0){
             newErrors.password = "Password contains spaces"
         }
-        if(!(password.trim().length < 6)){
+        if(password.length < 6){
             newErrors.password = "Password is less than 6 letters"
         }
         if (!/[A-Z]/.test(password)) {
             newErrors.password = "Password must contain an uppercase letter";
         }
-        // Vérifier s'il y a un caractère spécial dans le mot de passe
+        if (!/[1-9]/.test(password)) {
+            newErrors.password = "Password must contain a number";
+        }
         if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
             newErrors.password = "Password must contain a special character";
         }
         if(password !== confirm_password){
-            newErrors.password = "Confirm password is not equal to password"
+            newErrors.confirm_password = "Confirm password is not equal to password"
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -54,8 +55,13 @@ export default function Register(){
 
         if(validateForm()){
             try {
-                // Envoyer la requête ici
-                console.log("Formulaire soumis :", formData);
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    "Content-Type": "application/json",
+                    body: JSON.stringify(formData)
+                })
+                const data = await response.json()
+                console.log(data)
             } catch (error) {
                 console.error("Erreur lors de l'envoi du formulaire :", error);
             }
@@ -95,7 +101,7 @@ export default function Register(){
                         <div className="flex flex-col items-center">
                             <label htmlFor="password" className="text-white text-lg">Password</label>
                             <div className="relative">
-                                <input type="password" name="password" className="text-start rounded-lg p-1 pr-7"/>
+                                <input type="password" name="password" value={formData.password} onChange={handleChange} className="text-start rounded-lg p-1 pr-7"/>
                                 <Image onClick={showPasswordHandler} src={`${!showPassword ? "../images/eye.svg" : "../images/eye-slash.svg"}`} alt="show-password" height="100" width="0" className="h-6 w-auto absolute top-1 right-1 cursor-pointer"/>
                             </div>
                             <p className="text-red-500">{errors.password}</p>
@@ -103,7 +109,7 @@ export default function Register(){
                         <div className="flex flex-col items-center">
                             <label htmlFor="password" className="text-white text-lg">Confirm password</label>
                             <div className="relative">
-                                <input type="password" name="password" className="text-start rounded-lg p-1 pr-7"/>
+                                <input type="password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} className="text-start rounded-lg p-1 pr-7"/>
                                 <Image onClick={showPasswordHandler}
                                        src={`${!showConfirmPassword ? "../images/eye.svg" : "../images/eye-slash.svg"}`}
                                        alt="show-confirm_password" height="100" width="0"
