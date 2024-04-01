@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, {Suspense, useState} from "react";
 import PriceCard from "@/components/priceCard";
 import Link from "next/link";
+import {ImageLoadingIndicator} from "@/components/ImageLoadingIndicator";
 
 interface SkinCard{
     skinName: string
@@ -40,7 +41,7 @@ export function SkinCard({skinName, skinType, imgUrl, cost}: SkinCard){
         <Suspense fallback={<p>Loading...</p>}>
             <div className="relative flex flex-col justify-center items-center gap-5 bg-slate-600 text-white p-3 rounded-lg">
                 {isLoading && (
-                    <p>Loading...</p>
+                    <ImageLoadingIndicator/>
                 )}
                 <p className="text-lg font-medium text-sky-600">{skinName}</p>
                 <Image onLoad={handleImageLoad} src={imgUrl} alt={skinName} height="0" width="200"
