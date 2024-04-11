@@ -1,12 +1,11 @@
 'use client'
 import valorantSkins from "../../api/valorantSkins";
-import React, {Suspense, useCallback, useEffect, useState} from "react";
+import React, {Suspense, useCallback, useEffect} from "react";
 import Layout from "./layout";
 import {SkinCard} from "@/components/skinCard";
 import Filter from "@/components/Filter";
 import getWeapon from "../../api/valorantWeapons";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import {SkinsList} from "@/components/skinsList";
 
 export default function Skins({skins, weapon}) {
     const router = useRouter();
@@ -46,6 +45,7 @@ export default function Skins({skins, weapon}) {
             return;
         }
     }
+
     return (
         <Layout>
             <main className="bg-slate-800 flex flex-col justify-center items-center gap-5 min-h-dvh max-h-fit py-5">
