@@ -6,6 +6,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'static.wikia.nocookie.net',
             },
+            {
+                protocol: 'https',
+                hostname: 'media.valorant-api.com',
+            },
         ],
     },
     typescript: {
