@@ -2,7 +2,6 @@
 import Layout from "@/pages/layout";
 import {useRouter} from "next/router";
 import Image from "next/image";
-import {valueOf} from "autoprefixer";
 
 export default function Skin({skin, loaded}) {
     const router = useRouter();
