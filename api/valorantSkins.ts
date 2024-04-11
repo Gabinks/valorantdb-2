@@ -56,3 +56,8 @@ export default async function valorantSkins({page = 1, filter = '', sort = 'asc'
         return null;
     }
 }
+export async function getSkinByName(skinName){
+    const response = await fetch('https://valorant-api.com/v1/weapons/skins')
+    const data = await response.json();
+    return data.data.filter(skin => skin.displayName === skinName);
+}
