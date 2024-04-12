@@ -6,7 +6,6 @@ import Image from "next/image";
 export default function Skin({skin, loaded}) {
     const router = useRouter();
     if (loaded && skin && skin.length > 0) {
-        console.log(skin)
         return (
             <Layout>
                 <div className="min-h-dvh max-h-fit bg-slate-800 text-white flex flex-col justify-start items-center gap-10">
@@ -37,7 +36,8 @@ export default function Skin({skin, loaded}) {
 
 export async function getServerSideProps({query}) {
     const skinName = query.name;
-    const response = await fetch("http://localhost:3000/api/getskinbyname", {
+    const url = process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000";
+    const response = await fetch(`${url}/api/getskinbyname`, {
         method: "POST",
         body: JSON.stringify({skinName: skinName})
     });
