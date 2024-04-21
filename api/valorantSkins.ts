@@ -1,7 +1,8 @@
+import { hashPassword } from "@/utils/bcrypt";
 import axios from "axios";
 import * as cheerio from "cheerio";
 
-export default async function valorantSkins({page = 1, filter = '', sort = 'asc', search = ''}) {
+export default async function valorantSkins({ page = 1, filter = '', sort = 'asc', search = '' }) {
     try {
         const response = await axios.get('https://valorant.fandom.com/wiki/Weapon_Skins');
         const data = await response.data;
@@ -50,14 +51,22 @@ export default async function valorantSkins({page = 1, filter = '', sort = 'asc'
         const startIndex = (page - 1) * itemsPerPage
         const endIndex = startIndex + itemsPerPage
         const paginatedData = toReturn.slice(startIndex, endIndex);
-        return {data: paginatedData, actualPage: page, maxPage: Math.ceil(toReturn.length / itemsPerPage)};
+        return { data: paginatedData, actualPage: page, maxPage: Math.ceil(toReturn.length / itemsPerPage) };
     } catch (error) {
         console.error('Error fetching HTML:', error);
         return null;
     }
 }
-export async function getSkinByName(skinName){
+export async function getSkinByName(skinName: string) {
     const response = await fetch('https://valorant-api.com/v1/weapons/skins')
-    const data = await response.json();
-    return data.data.filter(skin => skin.displayName === skinName);
+    let data = await response.json();
+    data = data.data.filter((skin: { displayName: string; }) => skin.displayName.trim() === skinName)[0]
+    const url = process.env.PUBLIC_NEXT_URL || 'localhost:3000'
+    const apiKey = await hashPassword(process.env.NEXT_PUBLIC_API_KEY!)
+    const getSkinPriceResponse = await fetch(`http://${url}/api/getskinpricebyname?skinReq=${skinName}&apiKey=${apiKey}`, {
+        method: 'GET'
+    })
+    const getSkinPriceData = await getSkinPriceResponse.json();
+    data['cost'] = getSkinPriceData.skinPrice;
+    return data;
 }
