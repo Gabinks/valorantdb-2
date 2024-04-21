@@ -31,7 +31,7 @@ export default function Page() {
             setIsLoading(false);
         }
         fetchData()
-    }, []);
+    }, [router]);
     const clickHandler = () => {
         localStorage.removeItem('token');
         router.push('/skins')

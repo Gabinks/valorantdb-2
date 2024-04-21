@@ -49,7 +49,7 @@ export default function Skins() {
         if (parseInt(page!) > skins.maxPage) {
             router.push(pathName + '?' + createQueryString('page', '1'))
         }
-    }, [page]);
+    }, [page, createQueryString, pathName, router, skins.maxPage]);
 
     function paginationHandler(e) {
         if (e.target.id === 'back') {
