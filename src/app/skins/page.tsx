@@ -34,6 +34,7 @@ export default function Skins() {
     const params = useSearchParams();
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true)
             let page = parseInt(params.get('page')!) || 1;
             let filter = params.get('filter')! || '';
             let sort = params.get('sort')! || 'asc';
