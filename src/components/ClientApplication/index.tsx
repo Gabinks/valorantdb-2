@@ -1,6 +1,6 @@
 'use client'
 import { hashPassword } from "@/utils/bcrypt";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
 export default function ClientApplication({ children }) {
     useEffect(() => {
@@ -20,5 +20,9 @@ export default function ClientApplication({ children }) {
         }
         fetchData()
     }, []);
-    return children;
+    return (
+        <Suspense>
+            {children}
+        </Suspense>
+    );
 }
