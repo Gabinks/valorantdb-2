@@ -100,7 +100,7 @@ export default function Skins() {
                 <title>Home</title>
                 <main className="bg-slate-800 min-h-dvh max-h-fit flex flex-col justify-center items-center">
                     {loadingFilter}
-                    <div className="grid grid-cols-3 mobile:grid-cols-1 gap-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {loadingCards}
                     </div>
                 </main>
@@ -112,7 +112,7 @@ export default function Skins() {
             <title>Home</title>
             <main className="bg-slate-800 flex flex-col justify-center items-center gap-5 min-h-dvh max-h-fit py-5">
                 <Filter weapons={weapon} />
-                <div className="grid grid-cols-3 mobile:grid-cols-1 gap-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     {skins.data.map((value: object, index: number) => (
                         <SkinCard key={index} skinName={value.name} skinType={value.skinType}
                             imgUrl={value.skinImgUrl} cost={value.cost} />

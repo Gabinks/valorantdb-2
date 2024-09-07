@@ -20,7 +20,7 @@ export function Header() {
         setLoaded(true)
     }, [path, token]);
     return (
-        <header className="bg-slate-700 py-5 px-10 flex mobile:flex-col justify-between items-center mobile:gap-5">
+        <header className="bg-slate-700 py-5 px-10 flex flex-col sm:flex-row justify-between items-center mobile:gap-5">
             <Link href="/"><p className="text-3xl text-white">ValorantDB</p></Link>
             <ul className="text-lg flex mobile:flex-col gap-5 text-white">
                 <li><Link href="/" className="hover:opacity-80">Home</Link></li>
