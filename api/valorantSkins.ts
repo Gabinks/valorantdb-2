@@ -60,7 +60,8 @@ export default async function valorantSkins({ page = 1, filter = '', sort = 'asc
 export async function getSkinByName(skinName: string) {
     const response = await fetch('https://valorant-api.com/v1/weapons/skins')
     let data = await response.json();
-    data = data.data.filter((skin: { displayName: string; }) => skin.displayName.trim() === skinName)[0]
+    const regex = /[\s\/\\]+/g;
+    data = data.data.filter((skin: { displayName: string; }) => skin.displayName.replace(regex, "").toLowerCase() === skinName.replace(regex, "").toLowerCase())[0]
     const url = process.env.PUBLIC_NEXT_URL || 'localhost:3000'
     const apiKey = await hashPassword(process.env.NEXT_PUBLIC_API_KEY!)
     const getSkinPriceResponse = await fetch(`http://${url}/api/getskinpricebyname?skinReq=${skinName}&apiKey=${apiKey}`, {
