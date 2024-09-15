@@ -25,16 +25,6 @@ export function Header() {
             <ul className="text-lg flex mobile:flex-col gap-5 text-white">
                 <li><Link href="/" className="hover:opacity-80">Home</Link></li>
                 <li><Link href="/news" className="hover:opacity-80">News</Link></li>
-                {!loaded ? (
-                    <li className="animate-pulse">Loading...</li>
-                ) : (
-                    logged ? (
-                        <li><Link href="/profile" className="hover:opacity-80">Profile</Link></li>
-
-                    ) : (
-                        <li><Link href="/login" className="hover:opacity-80">Login</Link></li>
-                    )
-                )}
             </ul>
         </header>
     )
